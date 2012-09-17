@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@drawable/background_noise">
+	<ProgressBar android:id="@+id/progressBar"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_gravity="center" android:layout_centerInParent="true" />
+	<FrameLayout android:id="@+id/content" android:visibility="gone"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<TableLayout android:id="@+id/profileLayout"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:stretchColumns="1" android:shrinkColumns="1" android:padding="10dp">
+			<TableRow>
+				<TextView android:text="User name:" android:padding="3dip"
+					android:textStyle="bold" android:gravity="right" />
+				<TextView android:id="@+id/usernameTextView" />
+			</TableRow>
+			<TableRow>
+				<TextView android:text="Name:" android:padding="3dip"
+					android:textStyle="bold" android:gravity="right" />
+				<TextView android:id="@+id/nameTextView" />
+			</TableRow>
+			<TableRow>
+				<TextView android:text="Profile:" android:padding="3dip"
+					android:textStyle="bold" android:gravity="right" />
+				<TextView android:id="@+id/profileTextView" />
+			</TableRow>
+			<TableRow>
+				<TextView android:text="Homepage:" android:padding="3dip"
+					android:textStyle="bold" android:gravity="right" />
+				<TextView android:id="@+id/homepageTextView" />
+			</TableRow>
+			<TableRow>
+				<TextView android:text="Location:" android:padding="3dip"
+					android:textStyle="bold" android:gravity="right" />
+				<TextView android:id="@+id/locationTextView" />
+			</TableRow>
+			<TableRow>
+				<TextView android:text="Registered:" android:padding="3dip"
+					android:textStyle="bold" android:gravity="right" />
+				<TextView android:id="@+id/registeredTextView" />
+			</TableRow>
+		</TableLayout>
+		<TextView android:id="@android:id/empty"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_gravity="center" android:text="No profile"
+			android:textSize="15sp" android:textStyle="bold" android:visibility="gone" />
+	</FrameLayout>
+</RelativeLayout>
+
+

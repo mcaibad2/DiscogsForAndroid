@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:layout_gravity="top">
+	<LinearLayout android:id="@+id/itemLoading"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:visibility="gone" android:paddingLeft="10dp"
+		android:paddingTop="10dp" android:paddingBottom="10dp"
+		android:gravity="center_vertical">
+		<ProgressBar android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:paddingTop="2dp"
+			style="?android:attr/progressBarStyleSmall" />
+		<TextView android:text="Loading..." android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textSize="18dp"
+			android:textStyle="bold" android:textColor="@color/solid_red"
+			android:paddingLeft="5dp" />
+	</LinearLayout>
+	<LinearLayout android:id="@+id/itemContent"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:padding="5dp">
+		<ImageView android:id="@+id/thumbImageView"
+			android:layout_width="75dp" android:layout_height="75dp"
+			android:src="@drawable/ic_release" />
+		<LinearLayout android:layout_width="0dp"
+			android:layout_height="wrap_content" android:layout_weight="1"
+			android:orientation="vertical" android:layout_marginLeft="5dp">
+			<TextView android:id="@+id/titleTextView"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:textStyle="bold" android:textSize="15dp" />
+			<TextView android:id="@+id/roleTextView"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:textColor="@color/solid_red" android:shadowColor="#fff"
+				android:shadowDx="0" android:shadowDy="1" android:shadowRadius="0.00001" />
+			<TextView android:id="@+id/yearTextView"
+				android:layout_width="wrap_content" android:layout_height="wrap_content" />
+		</LinearLayout>
+	</LinearLayout>
+</FrameLayout>

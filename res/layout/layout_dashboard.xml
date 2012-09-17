@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@drawable/background_noise">
+	<ProgressBar android:id="@+id/progressBar"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_gravity="center" android:layout_centerInParent="true"
+		android:visibility="gone" />
+	<com.discogs.widgets.DashboardLayout
+		android:id="@+id/content" android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<Button android:id="@+id/searchButton" style="@style/DashboardButton"
+			android:text="@string/btn_search" android:drawableTop="@drawable/state_btn_search" />
+		<Button android:id="@+id/barcodeButton" style="@style/DashboardButton"
+			android:text="@string/btn_barcode" android:drawableTop="@drawable/state_btn_barcode"  />
+		<Button android:id="@+id/loginButton" style="@style/DashboardButton"
+			android:text="@string/btn_login" android:drawableTop="@drawable/state_btn_login" />
+		<Button android:id="@+id/collectionButton" style="@style/DashboardButton"
+			android:text="@string/btn_music_collection" android:drawableTop="@drawable/state_btn_music_collection" />
+		<Button android:id="@+id/wantlistButton" style="@style/DashboardButton"
+			android:text="@string/btn_music_wantlist" android:drawableTop="@drawable/state_btn_music_wantlist" />
+		<Button style="@style/DashboardButton" android:text="@string/btn_music_sales"
+			android:drawableTop="@drawable/state_btn_music_sales"
+			android:visibility="gone" />
+		<Button android:id="@+id/profileButton" style="@style/DashboardButton"
+			android:text="@string/btn_profile" android:drawableTop="@drawable/state_btn_profile" />
+		<Button android:id="@+id/aboutButton" style="@style/DashboardButton"
+			android:text="@string/btn_about" android:drawableTop="@drawable/state_btn_about" />
+		
+		<Button android:id="@+id/marketPlaceButton" style="@style/DashboardButton"
+			android:text="@string/btn_about" android:drawableTop="@drawable/state_btn_about" />
+		
+	</com.discogs.widgets.DashboardLayout>
+</RelativeLayout>
+

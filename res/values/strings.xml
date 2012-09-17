@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Discogs</string>
+	<string name="app_url">http://daskaswelt.appspot.com/</string>
+
+	<string name="api_key">31c7b33da0</string>
+	<string name="api_description">Search Discogs user-built database for artists, labels, and recordings</string>
+
+	<string name="btn_search">Search</string>
+	<string name="btn_login">User Login</string>
+	<string name="btn_music_collection">Collection</string>
+	<string name="btn_music_wantlist">Wantlist</string>
+	<string name="btn_music_sales">Sales inventory</string>
+	<string name="btn_about">About</string>
+	<string name="btn_profile">Profile</string>
+	<string name="btn_barcode">Scan</string>
+
+	<string name="label_collection">Collection</string>
+	<string name="label_profile">Profile</string>
+	<string name="label_wantlist">Wantlist</string>
+	<string name="label_search">Search</string>
+	<string name="label_image">Image</string>
+	<string name="label_no_youTube">YouTube app is not installed</string>
+	<string name="label_filter_results_by">Filter results by</string>
+	<string name="label_filter_discography_by">Filter discography by</string>
+	<string name="label_public">Public</string>
+		
+	<string name="menu_add_folder">Add folder</string>
+	<string name="menu_profile">Profile</string>
+	<string name="menu_filter">Filter</string>
+	<string name="menu_refresh">Refresh</string>
+	
+	<string name="hint_notes">Notes</string>
+	
+	<string name="prompt_media_condition">Media condition</string>
+	<string name="prompt_sleeve_condition">Sleeve condition</string>
+	
+	<string-array name="media_condition_array">
+	    <item>Select media condition</item>
+        <item>Mint (M)</item>
+        <item>Near Mint (NM or M-)</item>
+        <item>Very Good Plus (VG+)</item>
+        <item>Very Good (VG)</item>
+        <item>Good Plus (G+)</item>
+        <item>Good (G)</item>
+        <item>Fair (F)</item>
+        <item>Poor (P)</item>
+    </string-array>
+	<string-array name="sleeve_condition_array">
+	   	<item>Select sleeve condition</item>
+        <item>Generic</item>
+        <item>No Cover</item>
+       	<item>Mint (M)</item>
+        <item>Near Mint (NM or M-)</item>
+        <item>Very Good Plus (VG+)</item>
+        <item>Very Good (VG)</item>
+        <item>Good Plus (G+)</item>
+        <item>Good (G)</item>
+        <item>Fair (F)</item>
+        <item>Poor (P)</item>
+    </string-array>
+</resources>

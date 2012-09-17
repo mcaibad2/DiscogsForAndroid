@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<ProgressBar android:id="@+id/progressBar"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_gravity="center" android:layout_centerInParent="true" />
+	<ScrollView android:id="@+id/content" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_gravity="top"
+		android:visibility="gone">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="vertical">
+			<Gallery android:id="@+id/gallery" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" />
+			<TextView android:text="Info" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:padding="5dp"
+				android:background="@color/separator" android:textStyle="bold" />
+			<TableLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:stretchColumns="1"
+				android:shrinkColumns="1" android:padding="5dp">
+				<TableRow android:id="@+id/profileTableRow">
+					<TextView android:text="Profile:" android:textStyle="bold" />
+					<TextView android:id="@+id/profileTextView"
+						android:paddingLeft="5dp" />
+				</TableRow>
+				<TableRow android:id="@+id/sitesTableRow">
+					<TextView android:text="Sites:" android:textStyle="bold" />
+					<TextView android:id="@+id/sitesTextView"
+						android:paddingLeft="5dp" />
+				</TableRow>
+				<TableRow android:id="@+id/contactInfoTableRow">
+					<TextView android:text="Contact info:" android:textStyle="bold" />
+					<TextView android:id="@+id/contactInfoTextView"
+						android:paddingLeft="5dp" />
+				</TableRow>
+				<TableRow android:id="@+id/sublabelsTableRow">
+					<TextView android:text="Sublabels:" android:textStyle="bold" />
+					<LinearLayout android:id="@+id/sublabelsLayout"
+						android:paddingLeft="5dp" android:orientation="vertical" />
+				</TableRow>
+			</TableLayout>
+		</LinearLayout>
+	</ScrollView>
+</RelativeLayout>

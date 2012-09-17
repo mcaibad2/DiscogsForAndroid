@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:orientation="vertical" android:padding="10dp">
+
+	<TextView android:layout_height="wrap_content" android:text="Media condition"
+		android:layout_width="fill_parent" />
+	<Spinner android:id="@+id/mediaConditionSpinner"
+		android:layout_height="wrap_content" android:prompt="@string/prompt_media_condition"
+		android:layout_width="fill_parent" />
+
+	<TextView android:layout_height="wrap_content" android:text="Sleeve condition"
+		android:layout_width="fill_parent" android:layout_marginTop="10dp" />
+	<Spinner android:id="@+id/sleeveConditionSpinner"
+		android:layout_height="wrap_content" android:prompt="@string/prompt_sleeve_condition"
+		android:layout_width="fill_parent" />
+
+	<TextView android:layout_height="wrap_content" android:text="Notes"
+		android:layout_width="fill_parent" android:layout_marginTop="10dp" />
+	<EditText android:id="@+id/notesEditText"
+		android:layout_height="wrap_content" android:layout_width="fill_parent" />
+</LinearLayout>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<ProgressBar android:id="@+id/progressBar"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_gravity="center" android:layout_centerInParent="true" />
+	<ScrollView android:id="@+id/content" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_gravity="top"
+		android:visibility="gone">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="vertical">
+			<LinearLayout android:layout_height="wrap_content"
+				android:layout_width="fill_parent" android:padding="5dp">
+				<ImageView android:id="@+id/imageView"
+					android:layout_height="105dp" android:layout_width="105dp"
+					android:layout_marginRight="7dp" android:src="@drawable/ic_release" />
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="0dp" android:orientation="vertical"
+					android:layout_weight="1">
+					<TextView android:id="@+id/artistsTextView"
+						android:layout_height="wrap_content" android:layout_width="wrap_content"
+						android:textStyle="bold" android:textSize="15sp" />
+					<TextView android:id="@+id/titleTextView"
+						android:layout_height="wrap_content" android:layout_width="wrap_content"
+						android:textStyle="bold" android:textSize="15sp" />
+					<TextView android:id="@+id/typeTextView"
+						android:layout_height="wrap_content" android:layout_width="wrap_content"
+						android:textColor="@color/solid_red" android:shadowColor="#fff"
+						android:shadowDx="0" android:shadowDy="1" android:shadowRadius="0.00001" />
+				</LinearLayout>
+			</LinearLayout>
+			<!-- <TextView android:text="Actions" android:layout_width="fill_parent" 
+				android:layout_height="wrap_content" android:padding="5dp" android:background="@color/separator" 
+				android:textStyle="bold" /> <RatingBar android:id="@+id/ratingBar" android:layout_width="wrap_content" 
+				android:layout_height="wrap_content" android:numStars="5" android:stepSize="1.0" 
+				android:rating="2" /> <EditText android:id="@+id/notesEditText" android:layout_width="fill_parent" 
+				android:layout_height="wrap_content" android:hint="@string/hint_notes" android:singleLine="false" 
+				android:lines="5" android:layout_marginTop="5dip" android:layout_marginLeft="5dip" 
+				android:layout_marginRight="5dip" android:gravity="top|left" android:scrollHorizontally="false" 
+				android:minWidth="10.0dip" android:maxWidth="5.0dip" android:inputType="textCapSentences|textMultiLine" 
+				/> <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" 
+				android:gravity="top"> <CheckBox android:id="@+id/notesPublicCheckbox" android:text="@string/label_public" 
+				android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" 
+				/> <Button android:id="@+id/saveButton" android:layout_width="wrap_content" 
+				android:layout_height="wrap_content" android:text=" Save " android:paddingRight="7dip" 
+				android:layout_marginBottom="5dip" /> </LinearLayout> -->
+			<TextView android:text="Info" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:padding="5dp"
+				android:background="@color/separator" android:textStyle="bold" />
+			<TableLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:stretchColumns="1"
+				android:shrinkColumns="1" android:padding="5dp">
+				<TableRow android:id="@+id/labelTableRow">
+					<TextView android:text="Label:" android:textStyle="bold" />
+					<TextView android:id="@+id/labelTextView"
+						android:paddingLeft="5dp" />
+				</TableRow>
+				<TableRow android:id="@+id/formatTableRow">
+					<TextView android:text="Format:" android:textStyle="bold" />
+					<TextView android:id="@+id/formatTextView"
+						android:paddingLeft="5dp" />
+				</TableRow>
+				<TableRow android:id="@+id/countryTableRow">
+					<TextView android:text="Country:" android:textStyle="bold" />
+					<TextView android:id="@+id/countryTextView"
+						android:paddingLeft="5dp" />
+				</TableRow>
+				<TableRow android:id="@+id/releasedTableRow">
+					<TextView android:text="Released:" android:textStyle="bold" />
+					<TextView android:id="@+id/releasedTextView"
+						android:paddingLeft="5dp" />
+				</TableRow>
+				<TableRow android:id="@+id/genreTableRow">
+					<TextView android:text="Genre:" android:textStyle="bold" />
+					<TextView android:id="@+id/genreTextView"
+						android:paddingLeft="5dp" />
+				</TableRow>
+				<TableRow android:id="@+id/styleTableRow">
+					<TextView android:text="Style:" android:textStyle="bold" />
+					<TextView android:id="@+id/styleTextView"
+						android:paddingLeft="5dp" />
+				</TableRow>
+			</TableLayout>
+			<TextView android:id="@+id/imagesHeader" android:text="Images"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:padding="5dp" android:background="@color/separator"
+				android:textStyle="bold" />
+			<Gallery android:id="@+id/gallery" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" />
+			<TextView android:text="Tracklist" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:padding="5dp"
+				android:background="@color/separator" android:textStyle="bold" />
+			<TableLayout android:id="@+id/tracklistLayout"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:stretchColumns="1" android:shrinkColumns="1"
+				android:padding="5dp" />
+			<TextView android:id="@+id/notesHeader" android:text="Notes"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:padding="5dp" android:background="@color/separator"
+				android:textStyle="bold" />
+			<TextView android:id="@+id/notesTextView"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:padding="5dp" />
+			<TextView android:id="@+id/companiesHeader" android:text="Companies"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:padding="5dp" android:background="@color/separator"
+				android:textStyle="bold" />
+			<TextView android:id="@+id/companiesTextView"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:padding="5dp" />
+			<TextView android:id="@+id/videosHeader" android:text="Videos"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:padding="5dp" android:background="@color/separator"
+				android:textStyle="bold" />
+			<LinearLayout android:id="@+id/videosLayout"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:orientation="vertical" />
+		</LinearLayout>
+	</ScrollView>
+</RelativeLayout>
