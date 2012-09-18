@@ -54,8 +54,8 @@ import android.util.Log;
  * @author charliecollins
  * 
  */
-public class HTTPRequestHelper {
-
+public class HTTPRequestHelper 
+{
    private static final String CLASSTAG = HTTPRequestHelper.class.getSimpleName();
 
    private static final int POST_TYPE = 1;
@@ -68,7 +68,9 @@ public class HTTPRequestHelper {
    // establish client as static
    // (best practice in HttpClient 4 docs, note though that static will remain around for entire process)
    private static final DefaultHttpClient client;
-   static {      
+   
+   static 
+   {      
       HttpParams params = new BasicHttpParams();      
       params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
       params.setParameter(CoreProtocolPNames.HTTP_CONTENT_CHARSET, HTTP.UTF_8);

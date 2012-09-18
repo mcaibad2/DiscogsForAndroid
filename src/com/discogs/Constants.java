@@ -37,5 +37,5 @@ public class Constants
 	public static boolean SUPPORTS_GINGERBREAD = SDK_VERSION >= GINGERBREAD;
 	public static boolean SUPPORTS_FROYO = SDK_VERSION >= FROYO;
 	public static boolean SUPPORTS_ECLAIR = SDK_VERSION >= ECLAIR;
-	public static boolean TEST = SDK_VERSION >= ECLAIR;
+	public static boolean SUPPORTS_ECLAIR_ = SDK_VERSION >= ECLAIR;
 }
