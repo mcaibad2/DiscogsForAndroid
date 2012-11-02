@@ -80,7 +80,7 @@ public class SearchActivity extends ActionBarListActivity
 			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, DiscogsSuggestionProvider.AUTHORITY, DiscogsSuggestionProvider.MODE);
 			suggestions.saveRecentQuery(query, null);
 			setTitle("Search: " + query);
-			query = StringUtils.replace(query, " ", "_");
+			query = StringUtils.replace(query, " ", "+");
 			Thread thread = new Thread(new Runnable() 
 			{
 				public void run() 

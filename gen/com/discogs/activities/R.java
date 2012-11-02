@@ -132,19 +132,20 @@ containing a value of this type.
         public static final int ic_dropdown_selected=0x7f02001f;
         public static final int ic_launcher=0x7f020020;
         public static final int ic_release=0x7f020021;
-        public static final int ic_tile=0x7f020022;
-        public static final int list_selector=0x7f020023;
-        public static final int list_selector_focused=0x7f020024;
-        public static final int list_selector_pressed=0x7f020025;
-        public static final int me=0x7f020026;
-        public static final int state_btn_about=0x7f020027;
-        public static final int state_btn_barcode=0x7f020028;
-        public static final int state_btn_login=0x7f020029;
-        public static final int state_btn_music_collection=0x7f02002a;
-        public static final int state_btn_music_sales=0x7f02002b;
-        public static final int state_btn_music_wantlist=0x7f02002c;
-        public static final int state_btn_profile=0x7f02002d;
-        public static final int state_btn_search=0x7f02002e;
+        public static final int ic_thumbnail=0x7f020022;
+        public static final int ic_tile=0x7f020023;
+        public static final int list_selector=0x7f020024;
+        public static final int list_selector_focused=0x7f020025;
+        public static final int list_selector_pressed=0x7f020026;
+        public static final int me=0x7f020027;
+        public static final int state_btn_about=0x7f020028;
+        public static final int state_btn_barcode=0x7f020029;
+        public static final int state_btn_login=0x7f02002a;
+        public static final int state_btn_music_collection=0x7f02002b;
+        public static final int state_btn_music_sales=0x7f02002c;
+        public static final int state_btn_music_wantlist=0x7f02002d;
+        public static final int state_btn_profile=0x7f02002e;
+        public static final int state_btn_search=0x7f02002f;
     }
     public static final class id {
         public static final int aboutButton=0x7f070020;

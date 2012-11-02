@@ -131,6 +131,7 @@ public class ArtistActivity extends ActionBarActivity
 	/**********
 	 * Dialogs
 	 **********/
+	
 	protected Dialog onCreateDialog(int id) 
 	{
 	    Dialog dialog = null;

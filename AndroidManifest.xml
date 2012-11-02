@@ -3,7 +3,7 @@
 	package="com.discogs.activities" android:versionCode="49"
 	android:versionName="2.1.1" android:installLocation="auto">
 
-	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="10" />
+	<uses-sdk android:minSdkVersion="4" />
 
 	<uses-permission android:name="android.permission.ACCOUNT_MANAGER" />
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -74,11 +74,9 @@
 		<activity android:name="com.discogs.activities.WantActivity"
 			android:configChanges="orientation|keyboardHidden|keyboard"
 			android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		
 		<activity android:name="com.discogs.activities.MarketPlaceActivity"
 			android:configChanges="orientation|keyboardHidden|keyboard"
 			android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		
 		<activity android:name="com.discogs.activities.WebActivity"
 			android:configChanges="orientation|keyboardHidden|keyboard"
 			android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
