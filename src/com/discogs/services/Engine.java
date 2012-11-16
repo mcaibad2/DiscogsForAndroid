@@ -365,6 +365,7 @@ public class Engine
 		stringBuffer.append(resourceUrl);
 		stringBuffer.append("?page=");
 		stringBuffer.append(String.valueOf(page));
+		stringBuffer.append("&per_page=100");
 		
 		try 
 		{
@@ -417,6 +418,7 @@ public class Engine
 		stringBuffer.append(resourceUrl);
 		stringBuffer.append("/releases?page=");
 		stringBuffer.append(String.valueOf(page));
+		stringBuffer.append("&per_page=100");
 		
 		try 
 		{

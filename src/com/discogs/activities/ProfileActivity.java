@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.discogs.Constants;
+import com.discogs.R;
 import com.discogs.model.Profile;
 import com.discogs.services.Engine;
 

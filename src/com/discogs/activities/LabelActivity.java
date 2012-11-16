@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.discogs.Constants;
+import com.discogs.R;
 import com.discogs.adapters.ImageAdapter;
 import com.discogs.model.Label;
 import com.discogs.services.Engine;

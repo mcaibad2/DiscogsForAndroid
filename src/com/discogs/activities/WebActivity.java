@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.discogs.Constants;
+import com.discogs.R;
 
 public class WebActivity extends Activity
 {

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.discogs.Constants;
+import com.discogs.R;
 import com.discogs.services.Engine;
 
 public class MarketPlaceActivity extends ActionBarActivity

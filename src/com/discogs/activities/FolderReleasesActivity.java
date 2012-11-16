@@ -14,6 +14,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -30,9 +31,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.discogs.Constants;
-import com.discogs.adapters.FolderReleaseEndlessAdapter;
+import com.discogs.R;
 import com.discogs.adapters.ReleaseAdapter;
 import com.discogs.adapters.RemoveButtonClickListener;
 import com.discogs.model.Artist;
@@ -42,8 +44,13 @@ import com.discogs.model.Release;
 import com.discogs.services.Engine;
 import com.discogs.utils.ReleaseArtistComparator;
 import com.discogs.utils.ReleaseLabelComparator;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-public class FolderReleasesActivity extends ActionBarListActivity implements RemoveButtonClickListener
+public class FolderReleasesActivity extends ActionBarListActivity implements RemoveButtonClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener
 {
 	private static final int DIALOG_SORT = 0;
 	private static final int DIALOG_SEARCH = 1;
@@ -69,6 +76,11 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 	// private BeanComparator artistComparator = new BeanComparator("artists", new BeanComparator("name"));
 	// private BeanComparator labelComparator = new BeanComparator("labels", new BeanComparator("name"));
 	private int position;
+	
+	private PullToRefreshListView pullToRefreshListView;
+	private int page = 1;
+	private boolean listHasMoreItems = true;
+	private ReleaseAdapter adapter;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) 
@@ -99,6 +111,12 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 		this.userName = sharedPreferences.getString("user_name", null);
 		setTitle("Collection - " + folder);
 		
+		pullToRefreshListView = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
+		pullToRefreshListView.setOnRefreshListener(this);
+		pullToRefreshListView.setOnLastItemVisibleListener(this);
+		pullToRefreshListView.setDisableScrollingWhileRefreshing(true);
+		pullToRefreshListView.setMode(Mode.PULL_UP_TO_REFRESH);
+		
 		Thread thread = new Thread(new Runnable() 
 		{
 			@Override
@@ -123,21 +141,11 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 	protected void onListItemClick(ListView listView, View view, int position, long id) 
 	{
 		super.onListItemClick(listView, view, position, id);
-		
-		try
-		{
-			FolderReleaseEndlessAdapter listAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
-			ReleaseAdapter releaseAdapter = (ReleaseAdapter) listAdapter.getAdapter();
-			Release release = (Release) releaseAdapter.getItem(position);
-			
-			Intent intent = new Intent(this, ReleaseActivity.class);
-			intent.putExtra("resourceUrl", release.getBasicInformation().getResourceUrl());
-			intent.putExtra("title", release.getBasicInformation().getTitle());
-			startActivity(intent);
-		}
-		catch (Exception e) 
-		{
-		}
+		Release release = (Release) listView.getItemAtPosition(position);
+		Intent intent = new Intent(this, ReleaseActivity.class);
+		intent.putExtra("resourceUrl", release.getBasicInformation().getResourceUrl());
+		intent.putExtra("title", release.getBasicInformation().getTitle());
+		startActivity(intent);
 	}
 	
 //	@Override
@@ -195,9 +203,20 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 			}
 			case R.id.menu_sort:
 			{
-				if (!loading)
+				if (loading)
 				{
-					showDialog(DIALOG_SORT);
+					Toast.makeText(FolderReleasesActivity.this, "Please wait, loading items", Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					if (!listHasMoreItems)
+					{
+						showDialog(DIALOG_SORT);
+					}
+					else
+					{
+						Toast.makeText(FolderReleasesActivity.this, "Please, load all items", Toast.LENGTH_SHORT).show();
+					}
 				}
 				
 	            return true;
@@ -207,6 +226,10 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 				if (!loading)
 				{
 					showDialog(DIALOG_SEARCH);
+				}
+				else
+				{
+					Toast.makeText(FolderReleasesActivity.this, "Please wait, loading items", Toast.LENGTH_SHORT).show();
 				}
 				
 	            return true;
@@ -249,34 +272,25 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 		    	    {
 		    			progressBar.setVisibility(View.VISIBLE);
 		    			content.setVisibility(View.GONE);
+		    	    	CharSequence selection = items[item];
 		    			
-		    	    	selection = items[item];
-		    	    	FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
-		    	    	
-		    	    	if (folderReleaseEndlessAdapter != null)
+		    			if (selection.equals("Label"))
 		    	    	{
-			    	    	ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
-			    	    	List<Release> mReleases = releaseAdapter.getReleases();
-			    			
-			    			if (selection.equals("Label"))
-			    	    	{
-								Collections.sort(mReleases, releaseLabelComparator);
-			    				releaseAdapter.setReleases(mReleases);
-			    				releaseAdapter.notifyDataSetChanged();
-			    				getListView().setSelection(0);
-			    	    	}
-			    			else if (selection.equals("Artist"))
-			    	    	{
-			    				Collections.sort(mReleases, releaseArtistComparator);
-			    				releaseAdapter.setReleases(mReleases);
-			    				releaseAdapter.notifyDataSetChanged();
-			    				getListView().setSelection(0);
-			    	    	}
+							Collections.sort(releases, releaseLabelComparator);
+							adapter.setReleases(releases);
+							adapter.notifyDataSetChanged();
+		    				getListView().setSelection(0);
+		    	    	}
+		    			else if (selection.equals("Artist"))
+		    	    	{
+		    				Collections.sort(releases, releaseArtistComparator);
+		    				adapter.setReleases(releases);
+		    				adapter.notifyDataSetChanged();
+		    				getListView().setSelection(0);
 		    	    	}
 		    			
 		    			progressBar.setVisibility(View.GONE);
 		    			content.setVisibility(View.VISIBLE);
-		    			
 		    			dialog.dismiss();
 		    	    }
 		    	});
@@ -333,23 +347,26 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 		    					}
 		    				}
 
-	    					FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
-			    	    	ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
-			    	    	
-			    			if (selection.equals("Label"))
-			    	    	{
-								Collections.sort(mReleases, releaseLabelComparator);
-			    				releaseAdapter.setReleases(mReleases);
-			    				releaseAdapter.notifyDataSetChanged();
-			    				getListView().setSelection(0);
-			    	    	}
-			    			else if (selection.equals("Artist"))
-			    	    	{
-			    				Collections.sort(mReleases, releaseArtistComparator);
-			    				releaseAdapter.setReleases(mReleases);
-			    				releaseAdapter.notifyDataSetChanged();
-			    				getListView().setSelection(0);
-			    	    	}
+//	    					FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
+//			    	    	ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
+//			    	    	
+//			    			if (selection.equals("Label"))
+//			    	    	{
+//								Collections.sort(mReleases, releaseLabelComparator);
+//			    				releaseAdapter.setReleases(mReleases);
+//			    				releaseAdapter.notifyDataSetChanged();
+//			    				getListView().setSelection(0);
+//			    	    	}
+//			    			else if (selection.equals("Artist"))
+//			    	    	{
+//			    				Collections.sort(mReleases, releaseArtistComparator);
+//			    				releaseAdapter.setReleases(mReleases);
+//			    				releaseAdapter.notifyDataSetChanged();
+//			    				getListView().setSelection(0);
+//			    	    	}
+		    				
+		    				adapter.setReleases(mReleases);
+			    			adapter.notifyDataSetChanged();
 		    			}
 		    		}
 		    	});
@@ -357,23 +374,26 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 		    	{
 		    		public void onClick(DialogInterface dialog, int whichButton) 
 		    		{
-		    			FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
-		    	    	ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
-		    	    	
-		    			if (selection.equals("Label"))
-		    	    	{
-							Collections.sort(releases, releaseLabelComparator);
-		    				releaseAdapter.setReleases(releases);
-		    				releaseAdapter.notifyDataSetChanged();
-		    				getListView().setSelection(0);
-		    	    	}
-		    			else if (selection.equals("Artist"))
-		    	    	{
-		    				Collections.sort(releases, releaseArtistComparator);
-		    				releaseAdapter.setReleases(releases);
-		    				releaseAdapter.notifyDataSetChanged();
-		    				getListView().setSelection(0);
-		    	    	}
+//		    			FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
+//		    	    	ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
+//		    	    	
+//		    			if (selection.equals("Label"))
+//		    	    	{
+//							Collections.sort(releases, releaseLabelComparator);
+//		    				releaseAdapter.setReleases(releases);
+//		    				releaseAdapter.notifyDataSetChanged();
+//		    				getListView().setSelection(0);
+//		    	    	}
+//		    			else if (selection.equals("Artist"))
+//		    	    	{
+//		    				Collections.sort(releases, releaseArtistComparator);
+//		    				releaseAdapter.setReleases(releases);
+//		    				releaseAdapter.notifyDataSetChanged();
+//		    				getListView().setSelection(0);
+//		    	    	}
+		    			
+		    			adapter.setReleases(releases);
+		    			adapter.notifyDataSetChanged();
 		    			
 		    			removeDialog(DIALOG_SEARCH);
 		    		}
@@ -384,9 +404,11 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 			}
 		 	case DIALOG_EDIT_FIELDS:
 		    {
-		    	FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
-    	    	final ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
-    	    	Release release = (Release) releaseAdapter.getItem(position);
+//		    	FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
+//    	    	final ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
+//    	    	Release release = (Release) releaseAdapter.getItem(position);
+    	    	
+    	    	Release release = releases.get(position + 1);
     	    	final long releaseId = release.getId();
     	    	final long instanceId = release.getInstanceId();
     	    	final long folderId = release.getFolderId();
@@ -618,8 +640,9 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 		
 		if (!CollectionUtils.isEmpty(releases))
 		{
-			Collections.sort(releases, releaseArtistComparator);
-			setListAdapter(new FolderReleaseEndlessAdapter(this, engine, releases, resourceUrl, this, selection));
+//			Collections.sort(wants, wantArtistComparator);
+			adapter = new ReleaseAdapter(FolderReleasesActivity.this, releases, FolderReleasesActivity.this);
+			pullToRefreshListView.getRefreshableView().setAdapter(adapter);
 		}
 		
 		loading = false;
@@ -628,9 +651,10 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 	@Override
 	public void removeFromCollection(final int position) 
 	{
-		FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
-    	final ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
-    	Release release = (Release) releaseAdapter.getItem(position);
+//		FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
+//    	final ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
+//    	Release release = (Release) releaseAdapter.getItem(position);
+    	Release release = releases.get(position + 1);
     	final long releaseId = release.getId();
     	final long instanceId = release.getInstanceId();
     	final long folderId = release.getFolderId();
@@ -647,8 +671,8 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 					public void run() 
 					{
 						releases.remove(position);
-						releaseAdapter.setReleases(releases);
-						releaseAdapter.notifyDataSetChanged();
+						adapter.setReleases(releases);
+						adapter.notifyDataSetChanged();
 //						getListView().setSelection(0);
 					}
 				});
@@ -660,10 +684,10 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 	@Override
 	public void editFields(int position) 
 	{
-		FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
-    	final ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
-    	Release release = (Release) releaseAdapter.getItem(position);
-    	
+//		FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
+//    	final ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
+//    	Release release = (Release) releaseAdapter.getItem(position);
+    	Release release = releases.get(position + 1);
     	showDialog(DIALOG_EDIT_FIELDS);
 	}
 
@@ -672,5 +696,55 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 	{
 		this.position = position;
 		showDialog(DIALOG_OPERATIONS);
+	}
+
+	@Override
+	public void onLastItemVisible() 
+	{
+	}
+
+	@Override
+	public void onRefresh(PullToRefreshBase<ListView> refreshView) 
+	{
+		loading = true;
+		GetDataTask getDataTask = new GetDataTask();
+		getDataTask.execute();
+	}
+	
+	private class GetDataTask extends AsyncTask<Void, Void, List<Release>> 
+	{
+		@Override
+		protected List<Release> doInBackground(Void... params) 
+		{
+			List<Release> moreReleases = null;
+			
+			if (releases.size() == page*100)
+			{
+				page++;
+				moreReleases = engine.listReleasesInFolder(resourceUrl, page);
+			}
+			
+			return moreReleases;
+		}
+
+		@Override
+		protected void onPostExecute(List<Release> result) 
+		{
+			if (result != null && result.size() > 0)
+			{
+				releases.addAll(result);
+				adapter.notifyDataSetChanged();
+			}
+			else
+			{
+				listHasMoreItems = false;
+			}
+
+			// Call onRefreshComplete when the list has been refreshed.
+			pullToRefreshListView.onRefreshComplete();
+			loading = false;
+
+			super.onPostExecute(result);
+		}
 	}
 }

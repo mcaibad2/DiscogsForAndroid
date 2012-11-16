@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.discogs.Constants;
+import com.discogs.R;
 import com.discogs.adapters.ResultAdapter;
 import com.discogs.adapters.ResultEndlessAdapter;
 import com.discogs.model.Result;

@@ -30,6 +30,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.discogs.Constants;
+import com.discogs.R;
 import com.discogs.adapters.ImageAdapter;
 import com.discogs.cache.ImageLoader;
 import com.discogs.model.Artist;

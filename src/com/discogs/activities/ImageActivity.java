@@ -4,9 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLDecoder;
 
 import org.apache.http.HttpEntity;
@@ -32,7 +29,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.discogs.services.NetworkHelper;
+import com.discogs.R;
 import com.discogs.utils.HTTPRequestHelper;
 import com.discogs.widgets.TouchImageView;
 

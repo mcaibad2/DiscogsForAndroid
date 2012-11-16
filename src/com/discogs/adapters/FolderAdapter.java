@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.discogs.activities.R;
+import com.discogs.R;
 import com.discogs.model.Folder;
 
 public class FolderAdapter extends BaseAdapter 

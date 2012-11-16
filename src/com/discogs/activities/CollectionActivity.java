@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.discogs.Constants;
+import com.discogs.R;
 import com.discogs.adapters.FolderAdapter;
 import com.discogs.model.Folder;
 import com.discogs.services.Engine;

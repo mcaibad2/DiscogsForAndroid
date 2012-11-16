@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
 import com.commonsware.cwac.endless.EndlessAdapter;
-import com.discogs.activities.R;
+import com.discogs.R;
 import com.discogs.model.Result;
 import com.discogs.services.Engine;
 

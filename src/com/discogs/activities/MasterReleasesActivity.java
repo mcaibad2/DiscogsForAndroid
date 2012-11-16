@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.discogs.Constants;
+import com.discogs.R;
 import com.discogs.adapters.MasterReleaseAdapter;
 import com.discogs.model.MasterRelease;
 import com.discogs.services.Engine;

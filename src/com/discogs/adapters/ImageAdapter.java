@@ -11,7 +11,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 
 import com.discogs.ImageDownloader;
-import com.discogs.activities.R;
+import com.discogs.R;
 import com.discogs.model.Image;
 
 public class ImageAdapter extends BaseAdapter 

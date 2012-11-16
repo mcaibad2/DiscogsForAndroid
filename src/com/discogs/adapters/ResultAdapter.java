@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.discogs.activities.R;
+import com.discogs.R;
 import com.discogs.cache.ImageLoader;
 import com.discogs.model.Result;
 

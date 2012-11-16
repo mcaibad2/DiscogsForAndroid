@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.discogs.Constants;
+import com.discogs.R;
 import com.discogs.adapters.ArtistReleaseAdapter;
 import com.discogs.adapters.ArtistReleaseEndlessAdapter;
 import com.discogs.model.Release;

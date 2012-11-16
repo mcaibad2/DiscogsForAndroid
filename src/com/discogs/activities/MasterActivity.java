@@ -2,10 +2,11 @@ package com.discogs.activities;
 
 import java.util.List;
 
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -26,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,9 +36,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.discogs.Constants;
+import com.discogs.R;
 import com.discogs.adapters.ImageAdapter;
 import com.discogs.cache.ImageLoader;
 import com.discogs.model.Artist;

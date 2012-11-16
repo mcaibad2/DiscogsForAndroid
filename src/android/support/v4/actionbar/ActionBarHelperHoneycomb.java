@@ -23,7 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.discogs.activities.R;
+import com.discogs.R;
 
 /**
  * An extension of {@link ActionBarHelper} that provides Android 3.0-specific functionality for Honeycomb tablets. It

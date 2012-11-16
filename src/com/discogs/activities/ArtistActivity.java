@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.discogs.Constants;
+import com.discogs.R;
 import com.discogs.adapters.ImageAdapter;
 import com.discogs.model.Alias;
 import com.discogs.model.Artist;

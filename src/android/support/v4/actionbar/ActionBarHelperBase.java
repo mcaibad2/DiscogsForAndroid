@@ -40,7 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.discogs.activities.R;
+import com.discogs.R;
 
 /**
  * A class that implements the action bar pattern for pre-Honeycomb devices.
