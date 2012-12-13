@@ -19,6 +19,13 @@
 				android:layout_height="wrap_content"
 				android:text="Written and maintained by Andreas Daskalopoulos from Patras, Greece." />
 		</LinearLayout>
+
+		<TextView android:text="Version" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:padding="5dp"
+			android:background="@color/separator" android:textStyle="bold" />
+		<TextView android:id="@+id/versionTextView"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:padding="5dp" />
 	</LinearLayout>
 </ScrollView>
 

@@ -260,364 +260,378 @@ public class FolderReleasesActivity extends ActionBarListActivity implements Rem
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		LayoutInflater factory = LayoutInflater.from(this);
 		
-		switch(id) 
+		switch (id) 
 		{
 		 	case DIALOG_SORT:
 		    {
-		    	final CharSequence[] items = {"Artist", "Label"};
-		    	builder.setTitle("Sort by");
-		    	builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() 
+		    	if (!loading)
 		    	{
-					public void onClick(DialogInterface dialog, int item) 
-		    	    {
-		    			progressBar.setVisibility(View.VISIBLE);
-		    			content.setVisibility(View.GONE);
-		    	    	CharSequence selection = items[item];
-		    			
-		    			if (selection.equals("Label"))
-		    	    	{
-							Collections.sort(releases, releaseLabelComparator);
-							adapter.setReleases(releases);
-							adapter.notifyDataSetChanged();
-		    				getListView().setSelection(0);
-		    	    	}
-		    			else if (selection.equals("Artist"))
-		    	    	{
-		    				Collections.sort(releases, releaseArtistComparator);
-		    				adapter.setReleases(releases);
-		    				adapter.notifyDataSetChanged();
-		    				getListView().setSelection(0);
-		    	    	}
-		    			
-		    			progressBar.setVisibility(View.GONE);
-		    			content.setVisibility(View.VISIBLE);
-		    			dialog.dismiss();
-		    	    }
-		    	});
-				dialog = builder.create();
+		    		final CharSequence[] items = {"Artist", "Label"};
+			    	builder.setTitle("Sort by");
+			    	builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() 
+			    	{
+						public void onClick(DialogInterface dialog, int item) 
+			    	    {
+			    			progressBar.setVisibility(View.VISIBLE);
+			    			content.setVisibility(View.GONE);
+			    	    	CharSequence selection = items[item];
+			    			
+			    			if (selection.equals("Label"))
+			    	    	{
+								Collections.sort(releases, releaseLabelComparator);
+								adapter.setReleases(releases);
+								adapter.notifyDataSetChanged();
+			    				getListView().setSelection(0);
+			    	    	}
+			    			else if (selection.equals("Artist"))
+			    	    	{
+			    				Collections.sort(releases, releaseArtistComparator);
+			    				adapter.setReleases(releases);
+			    				adapter.notifyDataSetChanged();
+			    				getListView().setSelection(0);
+			    	    	}
+			    			
+			    			progressBar.setVisibility(View.GONE);
+			    			content.setVisibility(View.VISIBLE);
+			    			dialog.dismiss();
+			    	    }
+			    	});
+			    	
+					dialog = builder.create();
+		    	}
 				
 				break;
 			}
 		 	case DIALOG_SEARCH:
 		    {
-		    	View view = factory.inflate(R.layout.alert_dialog_text_entry, null);
-		    	final EditText editText = (EditText) view.findViewById(R.id.editText);
-		    	builder.setTitle("Search " + folder);
-		    	builder.setView(view);
-		    	builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+		    	if (!loading)
 		    	{
-		    		public void onClick(DialogInterface dialog, int whichButton) 
-		    		{
-		    			String searchTerm = editText.getText().toString();
-		    			
-		    			if (!TextUtils.isEmpty(searchTerm) && releases != null)
-		    			{
-		    				List<Release> mReleases = new ArrayList<Release>();
-		    				
-		    				for (Release release : releases)
-		    				{
-		    					boolean addToReleases = false;
-		    					BasicInformation basicInformation = release.getBasicInformation();
-		    					String title = basicInformation.getTitle();
-		    					
-		    					if (StringUtils.containsIgnoreCase(title, searchTerm))
-		    					{
-		    						addToReleases = true;
-		    					}
-		    					
-		    					if (!addToReleases)
-		    					{
-		    						List<Artist> artists = basicInformation.getArtists();
+		    		View view = factory.inflate(R.layout.alert_dialog_text_entry, null);
+			    	final EditText editText = (EditText) view.findViewById(R.id.editText);
+			    	builder.setTitle("Search " + folder);
+			    	builder.setView(view);
+			    	builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+			    	{
+			    		public void onClick(DialogInterface dialog, int whichButton) 
+			    		{
+			    			String searchTerm = editText.getText().toString();
+			    			
+			    			if (!TextUtils.isEmpty(searchTerm) && releases != null)
+			    			{
+			    				List<Release> mReleases = new ArrayList<Release>();
+			    				
+			    				for (Release release : releases)
+			    				{
+			    					boolean addToReleases = false;
+			    					BasicInformation basicInformation = release.getBasicInformation();
+			    					String title = basicInformation.getTitle();
 			    					
-			    					for (Artist artist : artists)
+			    					if (StringUtils.containsIgnoreCase(title, searchTerm))
 			    					{
-			    						String name = artist.getName();
-			    						
-										if (StringUtils.containsIgnoreCase(name, searchTerm))
-			    						{
-			    							addToReleases = true;
-			    							break;
-			    						}
+			    						addToReleases = true;
 			    					}
-		    					}
-		    					
-		    					if (addToReleases)
-		    					{
-		    						mReleases.add(release);
-		    					}
-		    				}
+			    					
+			    					if (!addToReleases)
+			    					{
+			    						List<Artist> artists = basicInformation.getArtists();
+				    					
+				    					for (Artist artist : artists)
+				    					{
+				    						String name = artist.getName();
+				    						
+											if (StringUtils.containsIgnoreCase(name, searchTerm))
+				    						{
+				    							addToReleases = true;
+				    							break;
+				    						}
+				    					}
+			    					}
+			    					
+			    					if (addToReleases)
+			    					{
+			    						mReleases.add(release);
+			    					}
+			    				}
 
-//	    					FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
+//		    					FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
+//				    	    	ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
+//				    	    	
+//				    			if (selection.equals("Label"))
+//				    	    	{
+//									Collections.sort(mReleases, releaseLabelComparator);
+//				    				releaseAdapter.setReleases(mReleases);
+//				    				releaseAdapter.notifyDataSetChanged();
+//				    				getListView().setSelection(0);
+//				    	    	}
+//				    			else if (selection.equals("Artist"))
+//				    	    	{
+//				    				Collections.sort(mReleases, releaseArtistComparator);
+//				    				releaseAdapter.setReleases(mReleases);
+//				    				releaseAdapter.notifyDataSetChanged();
+//				    				getListView().setSelection(0);
+//				    	    	}
+			    				
+			    				adapter.setReleases(mReleases);
+				    			adapter.notifyDataSetChanged();
+			    			}
+			    		}
+			    	});
+			    	builder.setNeutralButton("Clear", new DialogInterface.OnClickListener() 
+			    	{
+			    		public void onClick(DialogInterface dialog, int whichButton) 
+			    		{
+//			    			FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
 //			    	    	ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
 //			    	    	
 //			    			if (selection.equals("Label"))
 //			    	    	{
-//								Collections.sort(mReleases, releaseLabelComparator);
-//			    				releaseAdapter.setReleases(mReleases);
+//								Collections.sort(releases, releaseLabelComparator);
+//			    				releaseAdapter.setReleases(releases);
 //			    				releaseAdapter.notifyDataSetChanged();
 //			    				getListView().setSelection(0);
 //			    	    	}
 //			    			else if (selection.equals("Artist"))
 //			    	    	{
-//			    				Collections.sort(mReleases, releaseArtistComparator);
-//			    				releaseAdapter.setReleases(mReleases);
+//			    				Collections.sort(releases, releaseArtistComparator);
+//			    				releaseAdapter.setReleases(releases);
 //			    				releaseAdapter.notifyDataSetChanged();
 //			    				getListView().setSelection(0);
 //			    	    	}
-		    				
-		    				adapter.setReleases(mReleases);
+			    			
+			    			adapter.setReleases(releases);
 			    			adapter.notifyDataSetChanged();
-		    			}
-		    		}
-		    	});
-		    	builder.setNeutralButton("Clear", new DialogInterface.OnClickListener() 
-		    	{
-		    		public void onClick(DialogInterface dialog, int whichButton) 
-		    		{
-//		    			FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
-//		    	    	ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
-//		    	    	
-//		    			if (selection.equals("Label"))
-//		    	    	{
-//							Collections.sort(releases, releaseLabelComparator);
-//		    				releaseAdapter.setReleases(releases);
-//		    				releaseAdapter.notifyDataSetChanged();
-//		    				getListView().setSelection(0);
-//		    	    	}
-//		    			else if (selection.equals("Artist"))
-//		    	    	{
-//		    				Collections.sort(releases, releaseArtistComparator);
-//		    				releaseAdapter.setReleases(releases);
-//		    				releaseAdapter.notifyDataSetChanged();
-//		    				getListView().setSelection(0);
-//		    	    	}
-		    			
-		    			adapter.setReleases(releases);
-		    			adapter.notifyDataSetChanged();
-		    			
-		    			removeDialog(DIALOG_SEARCH);
-		    		}
-		    	});
-		    	dialog = builder.create();
+			    			
+			    			removeDialog(DIALOG_SEARCH);
+			    		}
+			    	});
+			    	dialog = builder.create();
+		    	}
 				
 				break;
 			}
 		 	case DIALOG_EDIT_FIELDS:
 		    {
-//		    	FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
-//    	    	final ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
-//    	    	Release release = (Release) releaseAdapter.getItem(position);
-    	    	
-    	    	Release release = releases.get(position + 1);
-    	    	final long releaseId = release.getId();
-    	    	final long instanceId = release.getInstanceId();
-    	    	final long folderId = release.getFolderId();
-    	    	
-		    	View view = factory.inflate(R.layout.dialog_edit_fields, null);
-		    	
-		    	final Spinner mediaConditionSpinner = (Spinner) view.findViewById(R.id.mediaConditionSpinner);
-		    	ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.media_condition_array, android.R.layout.simple_spinner_item);
-		    	adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		    	mediaConditionSpinner.setAdapter(adapter);
-		    	
-		    	final Spinner sleeveConditionSpinner = (Spinner) view.findViewById(R.id.sleeveConditionSpinner);
-		    	adapter = ArrayAdapter.createFromResource(this, R.array.media_condition_array, android.R.layout.simple_spinner_item);
-		    	adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		    	sleeveConditionSpinner.setAdapter(adapter);
-		    	
-		    	final EditText notesEditText = (EditText) view.findViewById(R.id.notesEditText);
-		    	
-		    	List<Field> fields = release.getFields();
-		    	
-				if (fields != null && fields.size() > 0)
+		    	if (!loading)
 		    	{
-		    		for (Field field : fields)
-		    		{
-		    			long _id = field.getId();
-		    			String value = field.getValue();
-		    			
-		    			// Media condition
-		    			if (_id == 1)
-		    			{
-		    				if (value.equals("Mint (M)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(1);
-		    				}
-		    				else if (value.equals("Near Mint (NM or M-)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(2);
-		    				}
-		    				else if (value.equals("Very Good Plus (VG+)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(3);
-		    				}
-		    				else if (value.equals("Very Good (VG)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(4);
-		    				}
-		    				else if (value.equals("Good Plus (G+)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(5);
-		    				}
-		    				else if (value.equals("Good (G)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(6);	
-		    				}
-		    				else if (value.equals("Fair (F)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(7);
-		    				}
-		    				else if (value.equals("Poor (P)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(8);
-		    				}
-		    				else
-		    				{
-		    					mediaConditionSpinner.setSelection(0);
-		    				}
-		    			}
-		    			
-		    			// Sleeve condition
-		    			if (_id == 2)
-		    			{
-		    				if (value.equals("Generic"))
-		    				{
-		    					mediaConditionSpinner.setSelection(1);
-		    				}
-		    				else if (value.equals("No Cover"))
-		    				{
-		    					mediaConditionSpinner.setSelection(2);
-		    				}
-		    				else if (value.equals("Mint (M)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(3);
-		    				}
-		    				else if (value.equals("Near Mint (NM or M-)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(4);
-		    				}
-		    				else if (value.equals("Very Good Plus (VG+)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(5);
-		    				}
-		    				else if (value.equals("Very Good (VG)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(6);
-		    				}
-		    				else if (value.equals("Good Plus (G+)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(7);
-		    				}
-		    				else if (value.equals("Good (G)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(8);	
-		    				}
-		    				else if (value.equals("Fair (F)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(9);
-		    				}
-		    				else if (value.equals("Poor (P)"))
-		    				{
-		    					mediaConditionSpinner.setSelection(10);
-		    				}
-		    				else
-		    				{
-		    					mediaConditionSpinner.setSelection(0);
-		    				}
-		    			}
-		    			
-		    			// Notes
-		    			if (_id == 3)
-		    			{
-		    				notesEditText.setText(value);
-		    			}
-		    		}
+		    		
+//			    	FolderReleaseEndlessAdapter folderReleaseEndlessAdapter = (FolderReleaseEndlessAdapter) getListAdapter();
+//	    	    	final ReleaseAdapter releaseAdapter = (ReleaseAdapter) folderReleaseEndlessAdapter.getAdapter();
+//	    	    	Release release = (Release) releaseAdapter.getItem(position);
+	    	    	
+	    	    	Release release = releases.get(position + 1);
+	    	    	final long releaseId = release.getId();
+	    	    	final long instanceId = release.getInstanceId();
+	    	    	final long folderId = release.getFolderId();
+	    	    	
+			    	View view = factory.inflate(R.layout.dialog_edit_fields, null);
+			    	
+			    	final Spinner mediaConditionSpinner = (Spinner) view.findViewById(R.id.mediaConditionSpinner);
+			    	ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.media_condition_array, android.R.layout.simple_spinner_item);
+			    	adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			    	mediaConditionSpinner.setAdapter(adapter);
+			    	
+			    	final Spinner sleeveConditionSpinner = (Spinner) view.findViewById(R.id.sleeveConditionSpinner);
+			    	adapter = ArrayAdapter.createFromResource(this, R.array.media_condition_array, android.R.layout.simple_spinner_item);
+			    	adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			    	sleeveConditionSpinner.setAdapter(adapter);
+			    	
+			    	final EditText notesEditText = (EditText) view.findViewById(R.id.notesEditText);
+			    	
+			    	List<Field> fields = release.getFields();
+			    	
+					if (fields != null && fields.size() > 0)
+			    	{
+			    		for (Field field : fields)
+			    		{
+			    			long _id = field.getId();
+			    			String value = field.getValue();
+			    			
+			    			// Media condition
+			    			if (_id == 1)
+			    			{
+			    				if (value.equals("Mint (M)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(1);
+			    				}
+			    				else if (value.equals("Near Mint (NM or M-)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(2);
+			    				}
+			    				else if (value.equals("Very Good Plus (VG+)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(3);
+			    				}
+			    				else if (value.equals("Very Good (VG)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(4);
+			    				}
+			    				else if (value.equals("Good Plus (G+)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(5);
+			    				}
+			    				else if (value.equals("Good (G)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(6);	
+			    				}
+			    				else if (value.equals("Fair (F)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(7);
+			    				}
+			    				else if (value.equals("Poor (P)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(8);
+			    				}
+			    				else
+			    				{
+			    					mediaConditionSpinner.setSelection(0);
+			    				}
+			    			}
+			    			
+			    			// Sleeve condition
+			    			if (_id == 2)
+			    			{
+			    				if (value.equals("Generic"))
+			    				{
+			    					mediaConditionSpinner.setSelection(1);
+			    				}
+			    				else if (value.equals("No Cover"))
+			    				{
+			    					mediaConditionSpinner.setSelection(2);
+			    				}
+			    				else if (value.equals("Mint (M)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(3);
+			    				}
+			    				else if (value.equals("Near Mint (NM or M-)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(4);
+			    				}
+			    				else if (value.equals("Very Good Plus (VG+)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(5);
+			    				}
+			    				else if (value.equals("Very Good (VG)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(6);
+			    				}
+			    				else if (value.equals("Good Plus (G+)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(7);
+			    				}
+			    				else if (value.equals("Good (G)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(8);	
+			    				}
+			    				else if (value.equals("Fair (F)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(9);
+			    				}
+			    				else if (value.equals("Poor (P)"))
+			    				{
+			    					mediaConditionSpinner.setSelection(10);
+			    				}
+			    				else
+			    				{
+			    					mediaConditionSpinner.setSelection(0);
+			    				}
+			    			}
+			    			
+			    			// Notes
+			    			if (_id == 3)
+			    			{
+			    				notesEditText.setText(value);
+			    			}
+			    		}
+			    	}
+			    	
+			    	builder.setView(view);
+			    	builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+			    	{
+			    		public void onClick(DialogInterface dialog, int whichButton) 
+			    		{
+			    	    	final String mediaCondition = (String) mediaConditionSpinner.getSelectedItem();
+			    	    	
+//			    	    	if (!mediaCondition.equals("Select media condition"))
+//			    	    	{
+//			    	    		Thread thread = new Thread(new Runnable() 
+//			    	    		{
+//									@Override
+//									public void run() 
+//									{
+//										engine.editFields(userName, folderId, releaseId, instanceId, "1", mediaCondition);
+//									}
+//								});
+//			    	    		thread.start();
+//			    	    	}
+			    	    	
+			    	    	final String sleeveCondition = (String) sleeveConditionSpinner.getSelectedItem();
+			    	    	
+//			    	    	if (!sleeveCondition.equals("Select sleeve condition"))
+//			    	    	{
+//			    	    		Thread thread = new Thread(new Runnable() 
+//			    	    		{
+//									@Override
+//									public void run() 
+//									{
+//										engine.editFields(userName, folderId, releaseId, instanceId, "2", sleeveCondition);
+//									}
+//								});
+//			    	    		thread.start();
+//			    	    	}
+			    			
+			    			Editable text = notesEditText.getText();
+			    	    	
+			    	    	if (text != null)
+			    	    	{
+			    	    		final String notes = String.valueOf(text);
+			    	    		
+			    	    		Thread thread = new Thread(new Runnable() 
+			    	    		{
+									@Override
+									public void run() 
+									{
+										engine.editFields(userName, folderId, releaseId, instanceId, "3", notes);
+									}
+								});
+			    	    		thread.start();
+			    	    	}
+			    		}
+			    	});
+			    	builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() 
+			    	{
+			    		public void onClick(DialogInterface dialog, int whichButton) 
+			    		{
+			    		}
+			    	});
+			    	dialog = builder.create();
 		    	}
-		    	
-		    	builder.setView(view);
-		    	builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
-		    	{
-		    		public void onClick(DialogInterface dialog, int whichButton) 
-		    		{
-		    	    	final String mediaCondition = (String) mediaConditionSpinner.getSelectedItem();
-		    	    	
-//		    	    	if (!mediaCondition.equals("Select media condition"))
-//		    	    	{
-//		    	    		Thread thread = new Thread(new Runnable() 
-//		    	    		{
-//								@Override
-//								public void run() 
-//								{
-//									engine.editFields(userName, folderId, releaseId, instanceId, "1", mediaCondition);
-//								}
-//							});
-//		    	    		thread.start();
-//		    	    	}
-		    	    	
-		    	    	final String sleeveCondition = (String) sleeveConditionSpinner.getSelectedItem();
-		    	    	
-//		    	    	if (!sleeveCondition.equals("Select sleeve condition"))
-//		    	    	{
-//		    	    		Thread thread = new Thread(new Runnable() 
-//		    	    		{
-//								@Override
-//								public void run() 
-//								{
-//									engine.editFields(userName, folderId, releaseId, instanceId, "2", sleeveCondition);
-//								}
-//							});
-//		    	    		thread.start();
-//		    	    	}
-		    			
-		    			Editable text = notesEditText.getText();
-		    	    	
-		    	    	if (text != null)
-		    	    	{
-		    	    		final String notes = String.valueOf(text);
-		    	    		
-		    	    		Thread thread = new Thread(new Runnable() 
-		    	    		{
-								@Override
-								public void run() 
-								{
-									engine.editFields(userName, folderId, releaseId, instanceId, "3", notes);
-								}
-							});
-		    	    		thread.start();
-		    	    	}
-		    		}
-		    	});
-		    	builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() 
-		    	{
-		    		public void onClick(DialogInterface dialog, int whichButton) 
-		    		{
-		    		}
-		    	});
-		    	dialog = builder.create();
 				
 				break;
 			}
 		 	case DIALOG_OPERATIONS:
 		    {
-		    	final CharSequence[] items = {"Remove", "Fields"};
-		    	builder.setTitle("Select action");
-		    	builder.setItems(items, new DialogInterface.OnClickListener() 
+		    	if (!loading)
 		    	{
-		    	    public void onClick(DialogInterface dialog, int item) 
-		    	    {
-		    	    	String selection = (String) items[item];
-		    	    	
-		    	    	if (selection.equals("Remove"))
-		    	    	{
-		    	    		removeFromCollection(position);
-		    	    	}
-		    	    	else if (selection.equals("Fields"))
-		    	    	{
-		    	    		showDialog(DIALOG_EDIT_FIELDS);
-		    	    	}
-		    	    }
-		    	});
-		    	dialog = builder.create();
+			    	final CharSequence[] items = {"Remove", "Fields"};
+			    	builder.setTitle("Select action");
+			    	builder.setItems(items, new DialogInterface.OnClickListener() 
+			    	{
+			    	    public void onClick(DialogInterface dialog, int item) 
+			    	    {
+			    	    	String selection = (String) items[item];
+			    	    	
+			    	    	if (selection.equals("Remove"))
+			    	    	{
+			    	    		removeFromCollection(position);
+			    	    	}
+			    	    	else if (selection.equals("Fields"))
+			    	    	{
+			    	    		showDialog(DIALOG_EDIT_FIELDS);
+			    	    	}
+			    	    }
+			    	});
+			    	dialog = builder.create();
+		    	}
 				
 				break;
 			}

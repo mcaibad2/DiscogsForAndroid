@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +43,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.discogs.Constants;
@@ -140,7 +142,7 @@ public class DashboardActivity extends ActionBarActivity
 			@Override
 			public void onClick(View view) 
 			{
-				if (Utils.checkInternetConnection(DashboardActivity.this))
+				if (Utils.isNetworkAvailable(DashboardActivity.this))
 				{
 					Map<String, String> requestHeaders = provider.getRequestHeaders();
 			    	requestHeaders.put("User-Agent", Constants.USER_AGENT);
@@ -230,7 +232,6 @@ public class DashboardActivity extends ActionBarActivity
 				showDialog(DIALOG_ABOUT);
 			}
 		});
-		
 		
 		Button marketPlaceButton = (Button) findViewById(R.id.marketPlaceButton);
 		marketPlaceButton.setVisibility(View.GONE);
@@ -567,7 +568,21 @@ public class DashboardActivity extends ActionBarActivity
 		    case DIALOG_ABOUT:
 		    {
 		    	builder.setTitle("About");
-		    	builder.setView(LayoutInflater.from(this).inflate(R.layout.layout_about, null));
+		    	View layout = LayoutInflater.from(this).inflate(R.layout.layout_about, null);
+		    	
+		    	try 
+		    	{
+		    		PackageInfo packageInfo = getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0 );
+					String versionName = packageInfo.versionName;
+					int versionCode = packageInfo.versionCode;
+		            TextView versionTextView = (TextView) layout.findViewById(R.id.versionTextView);
+			    	versionTextView.setText(String.format(getResources().getString(R.string.about_message), versionName, versionCode));
+		        } 
+		    	catch (Exception e) 
+		    	{
+		    	}
+				
+		    	builder.setView(layout);
 		    	builder.setCancelable(false);
 		    	builder.setInverseBackgroundForced(true);
 		    	builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() 

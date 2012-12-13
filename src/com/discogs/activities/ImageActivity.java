@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.discogs.R;
 import com.discogs.utils.HTTPRequestHelper;
+import com.discogs.utils.Utils;
 import com.discogs.widgets.TouchImageView;
 
 public class ImageActivity extends ActionBarActivity 
@@ -52,59 +53,66 @@ public class ImageActivity extends ActionBarActivity
 		final String url = (String) extras.get("url");
 		this.mTitle = URLDecoder.decode(title);
 		setTitle(mTitle);
-
-		Thread thread = new Thread(new Runnable()
+		
+		if (Utils.isNetworkAvailable(ImageActivity.this))
 		{
-			@Override
-			public void run() 
+			Thread thread = new Thread(new Runnable()
 			{
-				HTTPRequestHelper hTTPRequestHelper = new HTTPRequestHelper(new ResponseHandler<String>()
+				@Override
+				public void run() 
 				{
-					@Override
-					public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException 
+					HTTPRequestHelper hTTPRequestHelper = new HTTPRequestHelper(new ResponseHandler<String>()
 					{
-						HttpEntity entity = response.getEntity();
-						InputStream inputStream = entity.getContent();
-						bitmap = BitmapFactory.decodeStream(inputStream);
-						
-						handler.post(new Runnable()
+						@Override
+						public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException 
 						{
-							@Override
-							public void run() 
+							HttpEntity entity = response.getEntity();
+							InputStream inputStream = entity.getContent();
+							bitmap = BitmapFactory.decodeStream(inputStream);
+							
+							handler.post(new Runnable()
 							{
-								TouchImageView imageView = new TouchImageView(ImageActivity.this);
-							    imageView.setImageBitmap(bitmap);
-							    setContentView(imageView);
-							    
-							    getActionBarHelper().setRefreshActionItemState(false);
-							    loading = false;
-							}
-						});
-						
-						return null;
-					}
-				});
-				hTTPRequestHelper.performGet(url);
-				
-//				try 
-//				{
-//					URL mUrl = new URL(url);
-//					URLConnection connection = mUrl.openConnection();
-//					connection.setUseCaches(true);
-//					InputStream inputStream = connection.getInputStream();
-//			        bitmap = BitmapFactory.decodeStream(inputStream);
-//				}
-//				catch (MalformedURLException e) 
-//				{
-//					e.printStackTrace();
-//				}
-//				catch (IOException e) 
-//				{
-//					e.printStackTrace();
-//				}
-			}
-		});
-		thread.start();
+								@Override
+								public void run() 
+								{
+									TouchImageView imageView = new TouchImageView(ImageActivity.this);
+								    imageView.setImageBitmap(bitmap);
+								    setContentView(imageView);
+								    
+								    getActionBarHelper().setRefreshActionItemState(false);
+								    loading = false;
+								}
+							});
+							
+							return null;
+						}
+					});
+					hTTPRequestHelper.performGet(url);
+					
+//					try 
+//					{
+//						URL mUrl = new URL(url);
+//						URLConnection connection = mUrl.openConnection();
+//						connection.setUseCaches(true);
+//						InputStream inputStream = connection.getInputStream();
+//				        bitmap = BitmapFactory.decodeStream(inputStream);
+//					}
+//					catch (MalformedURLException e) 
+//					{
+//						e.printStackTrace();
+//					}
+//					catch (IOException e) 
+//					{
+//						e.printStackTrace();
+//					}
+				}
+			});
+			thread.start();
+		}
+		else
+		{
+			Toast.makeText(ImageActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	/*******

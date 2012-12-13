@@ -79,7 +79,7 @@ public class Utils
        return stringBuffer.toString();
     }
     
-    public static boolean checkInternetConnection(Context context) 
+    public static boolean isNetworkAvailable(Context context) 
     {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         

@@ -5,6 +5,7 @@
 
 	<string name="api_key">31c7b33da0</string>
 	<string name="api_description">Search Discogs user-built database for artists, labels, and recordings</string>
+	<string name="about_message" formatted="false">Version %s \nVersion code: %d\n\u00A9 2012</string>
 
 	<string name="btn_search">Search</string>
 	<string name="btn_login">User Login</string>

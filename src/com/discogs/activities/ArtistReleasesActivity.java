@@ -162,121 +162,138 @@ public class ArtistReleasesActivity extends ActionBarListActivity
 		Dialog dialog = null;
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-	    switch(id) 
+	    switch (id) 
 	    {
 		    case DIALOG_SORT:
 		    {
-		    	final CharSequence[] items = {"Date Ascending", "Date Descending"};
-		    	builder.setTitle("Sort by");
-		    	builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() 
+		    	if (!loading)
 		    	{
-					public void onClick(DialogInterface dialog, int item) 
-		    	    {
-		    			progressBar.setVisibility(View.VISIBLE);
-		    			content.setVisibility(View.GONE);
-		    			
-		    	    	selection = items[item];
-		    	    	ArtistReleaseEndlessAdapter artistReleaseEndlessAdapter = (ArtistReleaseEndlessAdapter) getListAdapter();
-		    	    	int page = artistReleaseEndlessAdapter.getPage();
-		    	    	
-		    	    	if (artistReleaseEndlessAdapter != null)
-		    	    	{
-		    	    		ArtistReleaseAdapter artistReleaseAdapter = (ArtistReleaseAdapter) artistReleaseEndlessAdapter.getAdapter();
-		    	    		List<Release> releases = artistReleaseAdapter.getReleases();
+			    	final CharSequence[] items = {"Date Ascending", "Date Descending"};
+			    	builder.setTitle("Sort by");
+			    	builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() 
+			    	{
+						public void onClick(DialogInterface dialog, int item) 
+			    	    {
+			    			progressBar.setVisibility(View.VISIBLE);
+			    			content.setVisibility(View.GONE);
 			    			
-							if (selection.equals("Date Ascending"))
+			    	    	selection = items[item];
+			    	    	ArtistReleaseEndlessAdapter artistReleaseEndlessAdapter = (ArtistReleaseEndlessAdapter) getListAdapter();
+			    	    	int page = artistReleaseEndlessAdapter.getPage();
+			    	    	
+			    	    	if (artistReleaseEndlessAdapter != null)
 			    	    	{
-								Collections.sort(releases, ascendingReleaseComparator);
-//								artistReleaseAdapter.setReleases(releases);
-//								artistReleaseAdapter.notifyDataSetChanged();
-//			    				getListView().setSelection(0);
-								artistReleaseEndlessAdapter = new ArtistReleaseEndlessAdapter(ArtistReleasesActivity.this, engine, releases, releasesUrl);
-								artistReleaseEndlessAdapter.setPage(page);
-			    				setListAdapter(artistReleaseAdapter);
+			    	    		ArtistReleaseAdapter artistReleaseAdapter = (ArtistReleaseAdapter) artistReleaseEndlessAdapter.getAdapter();
+			    	    		List<Release> releases = artistReleaseAdapter.getReleases();
+				    			
+			    	    		if (releases != null && releases.size() > 0)
+			    	    		{
+			    	    			if (selection.equals("Date Ascending"))
+					    	    	{
+										if (releases != null)
+										{
+											Collections.sort(releases, ascendingReleaseComparator);
+										}
+										
+//										artistReleaseAdapter.setReleases(releases);
+//										artistReleaseAdapter.notifyDataSetChanged();
+//					    				getListView().setSelection(0);
+										artistReleaseEndlessAdapter = new ArtistReleaseEndlessAdapter(ArtistReleasesActivity.this, engine, releases, releasesUrl);
+										artistReleaseEndlessAdapter.setPage(page);
+					    				setListAdapter(artistReleaseEndlessAdapter);
+					    	    	}
+					    			else if (selection.equals("Date Descending"))
+					    	    	{
+					    				if (releases != null)
+					    				{
+					    					Collections.sort(releases, descendingReleaseComparator);
+					    				}
+					    				
+//					    				artistReleaseAdapter.setReleases(releases);
+//					    				artistReleaseAdapter.notifyDataSetChanged();
+//					    				getListView().setSelection(0);
+					    				artistReleaseEndlessAdapter = new ArtistReleaseEndlessAdapter(ArtistReleasesActivity.this, engine, releases, releasesUrl);
+					    				artistReleaseEndlessAdapter.setPage(page);
+					    				setListAdapter(artistReleaseEndlessAdapter);
+					    	    	}
+			    	    		}
 			    	    	}
-			    			else if (selection.equals("Date Descending"))
-			    	    	{
-			    				Collections.sort(releases, descendingReleaseComparator);
-//			    				artistReleaseAdapter.setReleases(releases);
-//			    				artistReleaseAdapter.notifyDataSetChanged();
-//			    				getListView().setSelection(0);
-			    				artistReleaseEndlessAdapter = new ArtistReleaseEndlessAdapter(ArtistReleasesActivity.this, engine, releases, releasesUrl);
-			    				artistReleaseEndlessAdapter.setPage(page);
-			    				setListAdapter(artistReleaseAdapter);
-			    	    	}
-		    	    	}
-		    			
-		    			progressBar.setVisibility(View.GONE);
-		    			content.setVisibility(View.VISIBLE);
-		    			
-		    			dialog.dismiss();
-		    	    }
-		    	});
-				dialog = builder.create();
+			    			
+			    			progressBar.setVisibility(View.GONE);
+			    			content.setVisibility(View.VISIBLE);
+			    			
+			    			dialog.dismiss();
+			    	    }
+			    	});
+					dialog = builder.create();
+		    	}
 				
 				break;
 			}
 		    case DIALOG_FILTER:
 		    {
-		    	final CharSequence[] items = {"All", "Main release", "Remix", "Appearance", "Track appearance"};
-		    	builder.setTitle(R.string.label_filter_discography_by);
-		    	builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() 
+		    	if (!loading)
 		    	{
-		    	    public void onClick(DialogInterface dialog, int item) 
-		    	    {
-		    			progressBar.setVisibility(View.VISIBLE);
-		    			content.setVisibility(View.GONE);
-		    			
-		    	    	CharSequence selection = items[item];
-		    	    	ArtistReleaseEndlessAdapter artistReleaseEndlessAdapter = (ArtistReleaseEndlessAdapter) getListAdapter();
-		    	    	ArtistReleaseAdapter artistReleaseAdapter = (ArtistReleaseAdapter) artistReleaseEndlessAdapter.getAdapter();
-		    			
-		    			if (selection.equals("All"))
-		    	    	{
-		    				artistReleaseAdapter.setReleases(releases);
-		    				artistReleaseAdapter.notifyDataSetChanged();
-		    				getListView().setSelection(0);
-		    	    	}
-		    			else if (selection.equals("Main release"))
-		    	    	{
-		    	    		List<Release> releasesCopy = new ArrayList<Release>(releases);
-							CollectionUtils.filter(releasesCopy, mainPredicate);
-							artistReleaseAdapter.setReleases(releasesCopy);
-							artistReleaseAdapter.notifyDataSetChanged();
-							getListView().setSelection(0);
-		    	    	}
-		    			else if (selection.equals("Remix"))
-		    	    	{
-		    	    		List<Release> releasesCopy = new ArrayList<Release>(releases);
-							CollectionUtils.filter(releasesCopy, remixPredicate);
-							artistReleaseAdapter.setReleases(releasesCopy);
-							artistReleaseAdapter.notifyDataSetChanged();
-							getListView().setSelection(0);
-		    	    	}
-		    			else if (selection.equals("Appearance"))
-		    	    	{
-		    	    		List<Release> releasesCopy = new ArrayList<Release>(releases);
-							CollectionUtils.filter(releasesCopy, appearancePredicate);
-							artistReleaseAdapter.setReleases(releasesCopy);
-							artistReleaseAdapter.notifyDataSetChanged();
-							getListView().setSelection(0);
-		    	    	}
-		    			else if (selection.equals("Track appearance"))
-		    	    	{
-		    	    		List<Release> releasesCopy = new ArrayList<Release>(releases);
-							CollectionUtils.filter(releasesCopy, trackAppearancePredicate);
-							artistReleaseAdapter.setReleases(releasesCopy);
-							artistReleaseAdapter.notifyDataSetChanged();
-							getListView().setSelection(0);
-		    	    	}
-		    			
-		    			progressBar.setVisibility(View.GONE);
-		    			content.setVisibility(View.VISIBLE);
-		    			
-		    			dialog.dismiss();
-		    	    }
-		    	});
-				dialog = builder.create();
+		    		final CharSequence[] items = {"All", "Main release", "Remix", "Appearance", "Track appearance"};
+			    	builder.setTitle(R.string.label_filter_discography_by);
+			    	builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() 
+			    	{
+			    	    public void onClick(DialogInterface dialog, int item) 
+			    	    {
+			    			progressBar.setVisibility(View.VISIBLE);
+			    			content.setVisibility(View.GONE);
+			    			
+			    	    	CharSequence selection = items[item];
+			    	    	ArtistReleaseEndlessAdapter artistReleaseEndlessAdapter = (ArtistReleaseEndlessAdapter) getListAdapter();
+			    	    	ArtistReleaseAdapter artistReleaseAdapter = (ArtistReleaseAdapter) artistReleaseEndlessAdapter.getAdapter();
+			    			
+			    			if (selection.equals("All"))
+			    	    	{
+			    				artistReleaseAdapter.setReleases(releases);
+			    				artistReleaseAdapter.notifyDataSetChanged();
+			    				getListView().setSelection(0);
+			    	    	}
+			    			else if (selection.equals("Main release"))
+			    	    	{
+			    	    		List<Release> releasesCopy = new ArrayList<Release>(releases);
+								CollectionUtils.filter(releasesCopy, mainPredicate);
+								artistReleaseAdapter.setReleases(releasesCopy);
+								artistReleaseAdapter.notifyDataSetChanged();
+								getListView().setSelection(0);
+			    	    	}
+			    			else if (selection.equals("Remix"))
+			    	    	{
+			    	    		List<Release> releasesCopy = new ArrayList<Release>(releases);
+								CollectionUtils.filter(releasesCopy, remixPredicate);
+								artistReleaseAdapter.setReleases(releasesCopy);
+								artistReleaseAdapter.notifyDataSetChanged();
+								getListView().setSelection(0);
+			    	    	}
+			    			else if (selection.equals("Appearance"))
+			    	    	{
+			    	    		List<Release> releasesCopy = new ArrayList<Release>(releases);
+								CollectionUtils.filter(releasesCopy, appearancePredicate);
+								artistReleaseAdapter.setReleases(releasesCopy);
+								artistReleaseAdapter.notifyDataSetChanged();
+								getListView().setSelection(0);
+			    	    	}
+			    			else if (selection.equals("Track appearance"))
+			    	    	{
+			    	    		List<Release> releasesCopy = new ArrayList<Release>(releases);
+								CollectionUtils.filter(releasesCopy, trackAppearancePredicate);
+								artistReleaseAdapter.setReleases(releasesCopy);
+								artistReleaseAdapter.notifyDataSetChanged();
+								getListView().setSelection(0);
+			    	    	}
+			    			
+			    			progressBar.setVisibility(View.GONE);
+			    			content.setVisibility(View.VISIBLE);
+			    			
+			    			dialog.dismiss();
+			    	    }
+			    	});
+					dialog = builder.create();
+		    	}
 				
 				break;
 		    }
