@@ -106,7 +106,7 @@ public class SearchActivity extends ActionBarListActivity
 			{
 				public void run() 
 				{
-					results = engine.searchByBarCode(barCode, 1);
+					results = engine.searchByBarCode(barCode);
 					handler.post(new Runnable()
 					{
 						@Override

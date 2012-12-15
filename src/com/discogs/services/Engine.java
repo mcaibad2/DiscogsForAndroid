@@ -117,15 +117,14 @@ public class Engine
 		return results;
 	}
 	
-	public List<Result> searchByBarCode(String barcode, int page) 
+	public List<Result> searchByBarCode(String barcode) 
 	{
 		List<Result> results = null;
 		stringBuffer.setLength(0);
-		stringBuffer.append("http://api.discogs.com/database/search?page=");
-		stringBuffer.append(String.valueOf(page));
-		stringBuffer.append("&q=");
+		stringBuffer.append("http://api.discogs.com/database/search?type=release");
+		stringBuffer.append("&barcode=");
 		stringBuffer.append(barcode);
-		stringBuffer.append("&type=release");
+		// http://api.discogs.com/database/search?type=release&barcode=724357291224
 		
 		try 
 		{
