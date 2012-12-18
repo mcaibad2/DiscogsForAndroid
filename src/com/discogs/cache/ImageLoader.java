@@ -69,9 +69,35 @@ public class ImageLoader
 		});
     }
     
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) 
+    {
+    	// Raw height and width of image
+    	final int height = options.outHeight;
+    	final int width = options.outWidth;
+    	int inSampleSize = 2;
+
+    	if (height > reqHeight || width > reqWidth) 
+    	{
+    		if (width > height) 
+    		{
+    			inSampleSize = Math.round((float)height / (float)reqHeight);
+    		} 
+    		else 
+    		{
+    			inSampleSize = Math.round((float)width / (float)reqWidth);
+    		}
+    	}
+    	return inSampleSize;
+    }
+    
     private void showImage(final String url, final ImageView imageView) 
     {
-    	final Bitmap bitmap = BitmapFactory.decodeFile(fileCache.getFile(url).getAbsolutePath());
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        options.inSampleSize = calculateInSampleSize(options, 75, 75);
+        options.inJustDecodeBounds = false;
+        
+    	final Bitmap bitmap = BitmapFactory.decodeFile(fileCache.getFile(url).getAbsolutePath(), options);
     	Activity activity = (Activity) imageView.getContext();
         activity.runOnUiThread(new Runnable() 
         {

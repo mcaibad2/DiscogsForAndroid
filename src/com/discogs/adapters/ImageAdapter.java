@@ -10,22 +10,22 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
-import com.discogs.ImageDownloader;
 import com.discogs.R;
+import com.discogs.cache.ImageLoader;
 import com.discogs.model.Image;
 
 public class ImageAdapter extends BaseAdapter 
 {
     private Context context;
 	private List<Image> images;
-	private ImageDownloader imageDownloader;
+	private ImageLoader imageLoader;
 	private int galleryItemBackground;
 
     public ImageAdapter(Context context, List<Image> images) 
     {
         this.context = context;
         this.images = images;
-        this.imageDownloader = new ImageDownloader();
+        this.imageLoader = new ImageLoader(context);
         
         TypedArray typArray = context.obtainStyledAttributes(R.styleable.GalleryTheme);
         galleryItemBackground = typArray.getResourceId(R.styleable.GalleryTheme_android_galleryItemBackground, 0);
@@ -52,7 +52,7 @@ public class ImageAdapter extends BaseAdapter
         ImageView imageView = new ImageView(context);
 
         imageView.setImageResource(R.drawable.ic_release);
-        imageDownloader.download(images.get(position).getUri(), imageView);
+        imageLoader.load(images.get(position).getUri(), imageView);
         imageView.setLayoutParams(new Gallery.LayoutParams(150, 150));
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setBackgroundResource(galleryItemBackground);

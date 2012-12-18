@@ -24,6 +24,7 @@ public class ResultAdapter extends BaseAdapter
 	private ImageLoader imageLoader;
 //	private ImageDownloader imageDownloader = new ImageDownloader();
 	private StringBuffer stringBuffer = new StringBuffer();
+// 	private ImageFetcher mImageFetcher;
 	
 	public ResultAdapter(Context context, List<Result> results) 
 	{
@@ -31,6 +32,8 @@ public class ResultAdapter extends BaseAdapter
 		this.results = results;
 		this.layoutInflater = LayoutInflater.from(context);
 		this.imageLoader = new ImageLoader(context);
+		int mImageThumbSize = context.getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
+	//	this.mImageFetcher = new ImageFetcher(context, mImageThumbSize);
 	}
 	
 	public int getCount() 
@@ -75,6 +78,7 @@ public class ResultAdapter extends BaseAdapter
 		{
 			imageLoader.load(result.getThumb(), viewHolder.thumbImageView);
 //			imageDownloader.download(result.getThumb(), viewHolder.thumbImageView);
+		//	mImageFetcher.loadImage(result.getThumb(), viewHolder.thumbImageView);
 		}
 		
 		viewHolder.titleTextView.setText(result.getTitle());

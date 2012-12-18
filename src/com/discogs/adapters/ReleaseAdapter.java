@@ -110,7 +110,6 @@ public class ReleaseAdapter extends BaseAdapter
 		}
 		
 		viewHolder.artistsTextView.setText(stringBuffer.toString());
-		
 		viewHolder.thumbImageView.setImageResource(R.drawable.ic_release);
 		
 		if (basicInformation.getThumb() != null)

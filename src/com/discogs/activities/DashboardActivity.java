@@ -102,7 +102,14 @@ public class DashboardActivity extends ActionBarActivity
 			@Override
 			public void onClick(View view) 
 			{
-				startActivity(new Intent(DashboardActivity.this, CollectionActivity.class));
+				if (Utils.isNetworkAvailable(DashboardActivity.this))
+				{
+					startActivity(new Intent(DashboardActivity.this, CollectionActivity.class));
+				}
+				else
+				{
+					Toast.makeText(DashboardActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		
@@ -112,7 +119,14 @@ public class DashboardActivity extends ActionBarActivity
 			@Override
 			public void onClick(View view) 
 			{
-				startActivity(new Intent(DashboardActivity.this, WantlistActivity.class));
+				if (Utils.isNetworkAvailable(DashboardActivity.this))
+				{
+					startActivity(new Intent(DashboardActivity.this, WantlistActivity.class));
+				}
+				else
+				{
+					Toast.makeText(DashboardActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		
@@ -122,7 +136,14 @@ public class DashboardActivity extends ActionBarActivity
 			@Override
 			public void onClick(View view) 
 			{
-				startActivity(new Intent(DashboardActivity.this, ProfileActivity.class));
+				if (Utils.isNetworkAvailable(DashboardActivity.this))
+				{
+					startActivity(new Intent(DashboardActivity.this, ProfileActivity.class));
+				}
+				else
+				{
+					Toast.makeText(DashboardActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		
@@ -132,7 +153,14 @@ public class DashboardActivity extends ActionBarActivity
 			@Override
 			public void onClick(View view) 
 			{
-				onSearchRequested();
+				if (Utils.isNetworkAvailable(DashboardActivity.this))
+				{
+					onSearchRequested();
+				}
+				else
+				{
+					Toast.makeText(DashboardActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		
@@ -206,20 +234,27 @@ public class DashboardActivity extends ActionBarActivity
 			@Override
 			public void onClick(View view) 
 			{
-				if (engine == null)
+				if (Utils.isNetworkAvailable(DashboardActivity.this))
 				{
-					CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constants.CONSUMER_KEY, Constants.CONSUMER_SECRET);
-					SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashboardActivity.this);
-					String token = sharedPreferences.getString("token", null);
-					String tokenSecret = sharedPreferences.getString("token_secret", null);
-					consumer.setTokenWithSecret(token, tokenSecret);
-					engine = new Engine(consumer);
+					if (engine == null)
+					{
+						CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constants.CONSUMER_KEY, Constants.CONSUMER_SECRET);
+						SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashboardActivity.this);
+						String token = sharedPreferences.getString("token", null);
+						String tokenSecret = sharedPreferences.getString("token_secret", null);
+						consumer.setTokenWithSecret(token, tokenSecret);
+						engine = new Engine(consumer);
+					}
+					
+					IntentIntegrator intentIntegrator = new IntentIntegrator(DashboardActivity.this);
+					List<String> desiredCodeFormats = new ArrayList<String>();
+					desiredCodeFormats.add("UPC_A");
+					intentIntegrator.initiateScan(desiredCodeFormats);
 				}
-				
-				IntentIntegrator intentIntegrator = new IntentIntegrator(DashboardActivity.this);
-				List<String> desiredCodeFormats = new ArrayList<String>();
-				desiredCodeFormats.add("UPC_A");
-				intentIntegrator.initiateScan(desiredCodeFormats);
+				else
+				{
+					Toast.makeText(DashboardActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		
