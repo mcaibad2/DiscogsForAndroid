@@ -1,5 +1,6 @@
 package com.discogs.adapters;
 
+import java.util.Collection;
 import java.util.List;
 
 import android.content.Context;
@@ -19,6 +20,7 @@ import com.discogs.model.Artist;
 import com.discogs.model.BasicInformation;
 import com.discogs.model.Label;
 import com.discogs.model.Release;
+import org.apache.commons.lang.StringUtils;
 
 public class ReleaseAdapter extends BaseAdapter
 {
@@ -69,7 +71,7 @@ public class ReleaseAdapter extends BaseAdapter
 			viewHolder = new ViewHolder();
 			viewHolder.titleTextView = (TextView) convertView.findViewById(R.id.titleTextView);
 			viewHolder.thumbImageView = (ImageView) convertView.findViewById(R.id.thumbImageView);
-			viewHolder.labelsLayout = (LinearLayout) convertView.findViewById(R.id.labelsLayout);
+			viewHolder.labelTextView = (TextView) convertView.findViewById(R.id.labelTextView);
 			viewHolder.artistsTextView = (TextView) convertView.findViewById(R.id.artistsTextView);
 			viewHolder.removeButton = (Button) convertView.findViewById(R.id.removeButton);
 			viewHolder.fieldsButton = (Button) convertView.findViewById(R.id.fieldsButton);
@@ -85,31 +87,32 @@ public class ReleaseAdapter extends BaseAdapter
 		BasicInformation basicInformation = release.getBasicInformation();
 		viewHolder.titleTextView.setText(basicInformation.getTitle());
 		List<Label> labels = basicInformation.getLabels();
-		viewHolder.labelsLayout.removeAllViews();
-		
-		if (labels != null)
-		{
-			for (Label label : labels)
-			{
-				stringBuffer.setLength(0);
-				stringBuffer.append(label.getName());
-				stringBuffer.append(" - ");
-				stringBuffer.append(label.getCatNo());
-				TextView textView = new TextView(context);
-				textView.setText(stringBuffer.toString());
-				viewHolder.labelsLayout.addView(textView);
-			}
-		}
-		
-		List<Artist> artists = basicInformation.getArtists();
-		
-		for (Artist artist : artists)
-		{
-			stringBuffer.setLength(0);
-			stringBuffer.append(artist.getName());
-		}
-		
-		viewHolder.artistsTextView.setText(stringBuffer.toString());
+
+        // Labels
+        if (labels != null && labels.size() > 0) {
+            String[] labelsStrings = new String[labels.size()];
+            for (int i = 0; i < labels.size(); i++) {
+                Label label = labels.get(i);
+                stringBuffer.append(label.getName());
+                stringBuffer.append(" - ");
+                stringBuffer.append(label.getCatNo());
+                labelsStrings[i] = stringBuffer.toString();
+            }
+            viewHolder.labelTextView.setText(StringUtils.join(labelsStrings, ", "));
+        }
+
+        // Artists
+        List<Artist> artists = basicInformation.getArtists();
+        stringBuffer.setLength(0);
+        if (artists != null && artists.size() > 0) {
+            String[] artistStrings = new String[artists.size()];
+            for (int i = 0; i < artists.size(); i++) {
+                Artist artist = artists.get(0);
+                artistStrings[i] = artist.getName();
+            }
+            viewHolder.artistsTextView.setText(StringUtils.join(artistStrings, ", "));
+        }
+
 		viewHolder.thumbImageView.setImageResource(R.drawable.ic_release);
 		
 		if (basicInformation.getThumb() != null)
@@ -160,7 +163,7 @@ public class ReleaseAdapter extends BaseAdapter
 	static class ViewHolder 
 	{
 		TextView titleTextView;
-		LinearLayout labelsLayout;
+		TextView labelTextView;
 		TextView artistsTextView;
 		ImageView thumbImageView;
 		Button removeButton;

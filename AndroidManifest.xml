@@ -1,92 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.discogs" android:versionCode="52"
-	android:versionName="2.1.4" android:installLocation="auto">
+          package="com.discogs" android:versionCode="54"
+          android:versionName="2.1.6" android:installLocation="auto">
 
-	<uses-sdk android:minSdkVersion="4" />
+    <uses-sdk android:minSdkVersion="4"/>
 
-	<uses-permission android:name="android.permission.ACCOUNT_MANAGER" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCOUNT_MANAGER"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
-	<application android:icon="@drawable/ic_launcher"
-		android:label="@string/app_name" android:theme="@style/AppTheme"
-		android:name="com.discogs.DiscogsForAndroidApplication"
-		android:debuggable="true" android:hardwareAccelerated="true">
-		<provider android:name="com.discogs.services.DiscogsSuggestionProvider"
-			android:authorities="com.discogs.services.DiscogsSuggestionProvider" />
-		<activity android:label="@string/app_name"
-			android:name="com.discogs.activities.DashboardActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard"
-			android:launchMode="singleTask">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="callback" android:host="discogs" />
-			</intent-filter>
-			<meta-data android:name="android.app.default_searchable"
-				android:value="com.discogs.activities.SearchActivity" />
-		</activity>
-		<activity android:name="com.discogs.activities.SearchActivity"
-			android:label="@string/app_name" android:launchMode="singleTop"
-			android:configChanges="orientation|keyboard">
-			<intent-filter>
-				<action android:name="android.intent.action.SEARCH" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-			<meta-data android:name="android.app.searchable"
-				android:resource="@xml/searchable" />
-		</activity>
-		<activity android:label="@string/label_collection"
-			android:name="com.discogs.activities.CollectionActivity" />
-		<activity android:label="@string/label_profile"
-			android:name="com.discogs.activities.ProfileActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:label="@string/label_wantlist"
-			android:name="com.discogs.activities.WantlistActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:name="com.discogs.activities.ReleaseActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:name="com.discogs.activities.FolderReleasesActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:label="@string/label_image"
-			android:name="com.discogs.activities.ImageActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:name="com.discogs.activities.ArtistActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:name="com.discogs.activities.ArtistReleasesActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:name="com.discogs.activities.LabelActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:name="com.discogs.activities.MasterActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:name="com.discogs.activities.MasterReleasesActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:name="com.discogs.activities.LabelReleasesActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:name="com.discogs.activities.WantActionsActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard" />
-		<activity android:name="com.discogs.activities.WantActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard"
-			android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.discogs.activities.MarketPlaceActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard"
-			android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-		<activity android:name="com.discogs.activities.WebActivity"
-			android:configChanges="orientation|keyboardHidden|keyboard"
-			android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-			android:label="User Login">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="callback" android:host="discogs" />
-			</intent-filter>
-		</activity>
-	</application>
+    <application android:icon="@drawable/ic_launcher"
+                 android:label="@string/app_name" android:theme="@style/AppTheme"
+                 android:name="com.discogs.DiscogsForAndroidApplication"
+                 android:hardwareAccelerated="true" android:debuggable="false">
+        <provider android:name="com.discogs.services.DiscogsSuggestionProvider"
+                  android:authorities="com.discogs.services.DiscogsSuggestionProvider"/>
+        <activity android:label="@string/app_name"
+                  android:name="com.discogs.activities.DashboardActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"
+                  android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="callback" android:host="discogs"/>
+            </intent-filter>
+            <meta-data android:name="android.app.default_searchable"
+                       android:value="com.discogs.activities.SearchActivity"/>
+        </activity>
+        <activity android:name="com.discogs.activities.SearchActivity"
+                  android:label="@string/app_name" android:launchMode="singleTop"
+                  android:configChanges="orientation|keyboard">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable"/>
+        </activity>
+        <activity android:label="@string/label_collection"
+                  android:name="com.discogs.activities.CollectionActivity"/>
+        <activity android:label="@string/label_profile"
+                  android:name="com.discogs.activities.ProfileActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:label="@string/label_wantlist"
+                  android:name="com.discogs.activities.WantlistActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:name="com.discogs.activities.ReleaseActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:name="com.discogs.activities.FolderReleasesActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:label="@string/label_image"
+                  android:name="com.discogs.activities.ImageActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:name="com.discogs.activities.ArtistActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:name="com.discogs.activities.ArtistReleasesActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:name="com.discogs.activities.LabelActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:name="com.discogs.activities.MasterActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:name="com.discogs.activities.MasterReleasesActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:name="com.discogs.activities.LabelReleasesActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:name="com.discogs.activities.WantActionsActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"/>
+        <activity android:name="com.discogs.activities.WantActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+        <activity android:name="com.discogs.activities.MarketPlaceActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+        <activity android:name="com.discogs.activities.WebActivity"
+                  android:configChanges="orientation|keyboardHidden|keyboard"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+                  android:label="User Login">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="callback" android:host="discogs"/>
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>

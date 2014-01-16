@@ -297,7 +297,7 @@ public class JsonHelper
 					
 					JSONObject releaseJsonObject = releaseJsonArray.getJSONObject(i);
 					release.setId(releaseJsonObject.getLong("id"));
-					
+
 					if (releaseJsonObject.has("notes"))
 					{
 						JSONArray notesJsonArray = releaseJsonObject.getJSONArray("notes");
