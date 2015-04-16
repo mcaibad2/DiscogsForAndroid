@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Discogs</string>
+	<string name="app_name">Miron</string>
 	<string name="app_url">http://daskaswelt.appspot.com/</string>
 
 	<string name="api_key">31c7b33da0</string>

@@ -447,7 +447,7 @@ public class Engine
 	}
 	
 	/**
-	 * Remove an instance of a release from a user’s collection folder. Example request:
+	 * Remove an instance of a release from a user's collection folder. Example request:
 	 * DELETE /users/<username>/collection/folders/<folder_id>/releases/<release_id>/instances/<instance_id>
 	 */
 	public void deleteInstanceFromFolder(String userName, long folderId, long releaseId, long instanceId)
@@ -572,7 +572,7 @@ public class Engine
 	 ************************/
 	
 	/**
-	 * The Inventory resource allows you to view a user’s Marketplace inventory.
+	 * The Inventory resource allows you to view a user's Marketplace inventory.
 	 * GET /users/<username>/inventory
 	 */
 	public void listListing(String userName) 

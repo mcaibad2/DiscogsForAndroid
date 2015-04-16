@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
-	<LinearLayout android:orientation="vertical"
-		android:layout_width="match_parent" android:layout_height="match_parent">
-		<TextView android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="Discogs is an android client for Discogs API. The basic feature is to allow users to search Discogs user-built database for artists, releases and labels. Visit www.discogs.com for more information and to create a user account."
-			android:linksClickable="true" android:padding="5dp" />
-		<TextView android:text="Author" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:padding="5dp"
-			android:background="@color/separator" android:textStyle="bold" />
-		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:padding="5dip"
-			android:gravity="top" android:layout_gravity="top">
-			<ImageView android:src="@drawable/me" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_marginRight="5dip" />
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:text="Written and maintained by Andreas Daskalopoulos from Patras, Greece." />
-		</LinearLayout>
-
-		<TextView android:text="Version" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:padding="5dp"
-			android:background="@color/separator" android:textStyle="bold" />
-		<TextView android:id="@+id/versionTextView"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:padding="5dp" />
-	</LinearLayout>
+            android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+        <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:text="Miron is an android client for Discogs API. The basic feature is to allow users to search Discogs user-built database for artists, releases and labels. Visit www.discogs.com for more information and to create a user account."
+                  android:linksClickable="true" android:padding="5dp"/>
+        <TextView android:text="Author" android:layout_width="fill_parent"
+                  android:layout_height="wrap_content" android:padding="5dp"
+                  android:background="@color/separator" android:textStyle="bold"/>
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:padding="5dip" android:gravity="top" android:layout_gravity="top">
+            <ImageView android:src="@drawable/me" android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" android:layout_marginRight="5dip"/>
+            <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:text="Written and maintained by Andreas Daskalopoulos from Patras, Greece."/>
+        </LinearLayout>
+        <TextView android:text="Version" android:layout_width="fill_parent"
+                  android:layout_height="wrap_content" android:padding="5dp"
+                  android:background="@color/separator" android:textStyle="bold"/>
+        <TextView android:id="@+id/versionTextView" android:layout_width="fill_parent"
+                  android:layout_height="wrap_content" android:padding="5dp"/>
+    </LinearLayout>
 </ScrollView>
-
-

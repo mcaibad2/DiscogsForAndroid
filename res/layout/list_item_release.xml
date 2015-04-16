@@ -42,7 +42,7 @@
                 style="@android:style/Widget.Button.Small" android:visibility="gone"/>
         <Button android:id="@+id/operationsImageButton"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:background="@drawable/ic_dropdown" android:focusable="false"
+                android:background="@drawable/ic_dropdown_selected" android:focusable="false"
                 android:visibility="gone"/>
     </LinearLayout>
 </FrameLayout>

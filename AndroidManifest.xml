@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.discogs" android:versionCode="54"
-          android:versionName="2.1.6" android:installLocation="auto">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.discogs"
+          android:versionCode="55" android:versionName="2.1.7" android:installLocation="auto">
     <uses-sdk android:minSdkVersion="4"/>
-
     <uses-permission android:name="android.permission.ACCOUNT_MANAGER"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-    <application android:icon="@drawable/ic_launcher"
-                 android:label="@string/app_name" android:theme="@style/AppTheme"
+    <application android:icon="@drawable/ic_launcher" android:label="@string/app_name"
+                 android:theme="@style/AppTheme"
                  android:name="com.discogs.DiscogsForAndroidApplication"
                  android:hardwareAccelerated="true" android:debuggable="false">
         <provider android:name="com.discogs.services.DiscogsSuggestionProvider"
@@ -39,8 +35,7 @@
                 <action android:name="android.intent.action.SEARCH"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                       android:resource="@xml/searchable"/>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
         </activity>
         <activity android:label="@string/label_collection"
                   android:name="com.discogs.activities.CollectionActivity"/>
@@ -90,3 +85,4 @@
         </activity>
     </application>
 </manifest>
+
